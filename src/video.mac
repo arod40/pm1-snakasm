@@ -4,6 +4,8 @@
 %define COLS 80
 %define ROWS 25
 
+%define FBUFFER 0xB8000
+
 %define FG.BLACK   0 << 8
 %define FG.BLUE    1 << 8
 %define FG.GREEN   2 << 8
@@ -24,4 +26,52 @@
 %define BG.GRAY    7 << 12
 %define BG.BRIGHT  8 << 12
 
+%define BLINK      1 << 15
+
 %endif ; VIDEO_MAC
+
+;get the linear position of a (i,j) point 
+%ifndef GET_POS
+%macro GET_POS 2
+push edx
+mov ax, %1
+sub ax, 1
+mul word[EIGHTY]
+pop edx
+push edx
+add ax, %2
+sub ax, 1
+mul word[TWO]
+pop edx
+%endmacro
+%endif
+
+;get the (i,j) position (i in al register and j in ah)
+;of a linear position  
+%ifndef GET_POS_INV
+%macro GET_POS_INV 1 
+push edx
+mov ax, %1
+cwd
+div word[TWO] ;aki divido entre la word para q me mantenga el cociente en ax
+div byte[EIGHTY] ;aki divido entre el byte para q me ponga el cociente en al y el resto en ah
+add al, 1
+add ah, 1
+pop edx
+%endmacro
+%endif
+
+%ifndef prologue
+%macro prologue 0
+  push ebp
+  mov ebp, esp
+  pusha
+%endmacro
+%endif
+
+%ifndef epilogue
+%macro epilogue 0
+  popa
+  pop ebp
+%endmacro
+%endif

@@ -1,0 +1,19 @@
+en la memoria de la t.v. el viene por pares d bytes. el menis significativo es el char a imprimir y el mas significativo tiene el formato.
+El bg color esta en los 4 bits mas significtivos dl byte de formato, y el color d la letra esta en los 4 bits menos sign
+El blinkeo esta en el bit mas significatiuivo(1 blinkea)
+blink<<15(un bit)|bg<<12(3 bits)|fg<<8|char
+
+Las macros de nasm te permiten ejecutar algunas operaciones como << o las logicas(|, &, etc) siempre q el codigo venga de una macro!!!!!!!!!!! por eso es q lo q esta en video.mac pincha
+
+ideas para representar la serpiente:
+reservar espacio en memoria estatica para la maxima long d la serpiente(4bytes por cada pixel
+2 para los datos del pixel y dos para la posicion)
+guardar puntero al inicio d ese espacio
+guardar punteros a
+-cabeza de la serpient
+-cola de la serpient
+-cant de nodos de la serpient actualment
+
+Entoncs el mover la serpient a tal direccion es simplemnt al ultimo nodo ponerle la posicion del q va a ser el primero y dcir q ese es el primero
+reasignar el ultimo nodo al siguient(ojo si se llega al final se empieza dsd el 1ro)
+ojo mover 1ro el ultimo y dspues reasingar el 1ro, para evitar colisiones del priemro con el ultimo
